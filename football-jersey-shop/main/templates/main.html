@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Football Jersey Shop</title>
+    <style>
+        body {
+            margin: 0;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            position: relative; 
+            background-image: url("{% static 'gambar_jersey/joshua-hoehne-YFqEiR2euVg-unsplash.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 350px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        .brand {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 15px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .header h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+
+        .header form {
+            margin-top: 20px;
+        }
+
+        .header input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .content {
+            background-image: url("{% static 'gambar_jersey/bggreen.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 50px 0;
+            min-height: 100vh;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .product {
+            background: rgba(253, 252, 252, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            width: 300px;
+            height: 475px;
+            margin: auto;
+        }
+
+        .product img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid black;
+        }
+
+        .product h3 {
+            margin: 10px 0 5px;
+            font-size: 20px;
+            color: black;
+        }
+
+        .product p {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.573);
+            font-weight: bold;
+        }
+
+        .product .desc {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.477);        
+            margin-top: 5px;
+            font-family: sans-serif;
+            font-style: italic; 
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="brand">Go Nadine Audelia - PBP C</div> 
+        <h1>Football Jersey Shop</h1>
+        <form>
+            <input type="text" placeholder="Search">
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="product-container">
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseyrealmadrid.webp' %}" alt="Jersey 1">
+                <h3>Real Madrid</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseymu.webp' %}" alt="Jersey 2">
+                <h3>Manchester United</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseybarcelona.jpg' %}" alt="Jersey 3">
+                <h3>Barcelona</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseyliverpool.webp' %}" alt="Jersey 4">
+                <h3>Liverpool</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseyarsenal.jpg' %}" alt="Jersey 5">
+                <h3>Arsenal</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+            <div class="product">
+                <img src="{% static 'gambar_jersey/jerseychelsea.jpg' %}" alt="Jersey 6">
+                <h3>Chelsea</h3>
+                <p>Rp 250.000,00</p>
+                <p class="desc">Baju berkualitas, bahan nyaman dipakai</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
