@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+<p>
+  <a href="{% url 'main:show_main' %}">
+    <button>← Back to Product List</button>
+  </a>
+</p>
+
+<h1>{{ product.name }}</h1>
+<p><b>Harga:</b> Rp {{ product.price }} | 
+   <i>Ditambahkan pada {{ product.created_at|date:"d M Y, H:i" }}</i>
+</p>
+
+{% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}" width="300" style="margin-bottom:20px;">
+{% else %}
+  <img src="{% static 'gambar_jersey/default.jpg' %}" alt="Default Jersey" width="300" style="margin-bottom:20px;">
+{% endif %}
+
+<p><b>Deskripsi:</b></p>
+<p>{{ product.description }}</p>
+
+{% endblock content %}

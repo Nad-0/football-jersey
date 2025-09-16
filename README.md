@@ -2,6 +2,7 @@ Nama = Go Nadine Audelia
 NPM = 2406348774
 Kelas = PBP C
 
+TUGAS 2
 Tautan menuju aplikasi PWS = https://pbp.cs.ui.ac.id/go.nadine/football-jersey-shop
 
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
@@ -35,3 +36,26 @@ Menurut saya, framework Django digunakan sebagai permulaan karena Django memilik
 
 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 Tidak ada feedback dari saya. Tutorial 1 dapat saya cukup pahami dan asisten dosen juga telah bekerja dengan baik.
+
+
+TUGAS 3
+1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+Data delivery diperlukan untuk kepentingan komunikasi antara user dan sistem. Dengan menggunakan data delivery, informasi user dapat dikirimkan dan diproses oleh server. Data delivery juga memastikan keamanan data yang berpindah melalui enkripsi dan autentikasi. Terakhir, data delivery memungkinkan integrasi dengan layanan pihak ketiga.
+
+2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+Menurut saya JSON lebih baik dikarenakan beberapa alasan yang sama dengan alasan mengapa JSON lebih populer. JSON lebih sederhana dan efesien daripada XML. JSON menggunakan format key value sehingga lebih mudah dipahami. Selain itu dibandingkan XML, JSON memiliki banyak dukungan dan integrasi dengan JavaScript dan berbagai framework.
+
+3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Method is_valid() dibutuhkan karena berperan penting untuk validasi data yang dikirimkan form. Validasi data sangatlah penting dalam menjaga konsistensi data. Validasi data menghindarkan dari masuknya data tidak sesuai ke database yang dapat menyebabkan error.
+
+4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+Dibutuhkan csrf_token untuk melindungi aplikasi dari serangan Cross-Site Request Forgery. CSRF adalah serangan dari penyerang yang memanfaatkan sesi user yang sedang aktif untuk mengirimkan request berbahaya tanpa sepengetahuan user. Jika csrf_token tidak ditambahkan, maka penyerang dapat membuat halaman berbahaya yang secara otomatis mengirimkan request ke server menggunakan kredensial pengguna yang sudah login, misalnya melakukan perubahan data dengan nama korban.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
+Pertama-tama, saya membuat file base.html yang berfungsi sebagai template dasar yang dapat digunakan sebagai kerangka umum. Kemudian memastikan agar base.html terdeteksi sebagai template dan membuat main.html extends base.html. Tahap kedua, saya membuat forms.py pada folder main untuk menerima data baru. Selanjutnya, saya menambahkan beberapa import dan fungsi di views.py. Saya membuka main.html dan menambahkan kode yang menampilkan data product serta tombol add. Membuat file create_product dan product_detail lalu menambahkan url proyek ke csrf_trusted_origins. Tahap ketiga adalah mengembalikan data dalam bentuk XML dan JSON. Saya mengimport HttpResponse dan Serializer di views.py, lalu membuat fungsi show_xml dan show_json serta mengimpor fungsi yang telah dibuat tadi di urls.py dan menambahkan path agar dapat mengakses fungsinya. Tahap empat adalah mengembalikan data berdasarkan ID. Caranya adalah dengan menambahkan dua fungsi tentang show by id di file views. Lalu di views.py mengimpor fungsi tadi dan menambahkan path ke url. 
+
+6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+Tidak ada feedback dari saya. Semuanya udah bagus aja.
+
+7. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md!
+https://drive.google.com/drive/folders/1v2IRwDMkuyOaWeBDtMXTCxlVP0VaA520?usp=sharing
