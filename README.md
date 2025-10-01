@@ -83,3 +83,30 @@ Saya mengaktifkan env lalu run server terlebih dahulu. Kemudian saya tinggal mem
 Saya mengimport User di models.py, memodifikasi model Product dengan menambahkan variable user, lalu melakukan migrasi. Kemudian syaa mengubah kode di fungsi create_product, memodifikasi show_main, menambahkan tombol filter My dan All di main.html, dan menampilkan nama author di product_detail.html.
 - Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi.
 Untuk menampilkan status login atau logout, saya mengimport HttpResponseRedirect, reverse, dan datetime, memodifikasi fungsi login_user agar dapat menyimpan cookie bernama last_login, memodifikasi fungsi show_main, mengubah fungsi logout_user untuk menghapus cookie last_login setelah logout, dan menambahkan kode untuk menampilkan last login di main.html.
+
+TUGAS 5
+1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Urutan prioritas ditentukan oleh tingkat kekhususan dan urutan pembacaan. Selector dengan prioritas tertinggi adalah inline style yang ditulis langsung pada elemen dengan atribut style. Setelah itu, selector dari ID selector memiliki prioritas lebih tinggi dibanding class, pseudo-class, atau atribut selector. Di bawahnya, terdapat element selector dan pseudo-element yang tingkat kekhususannya lebih rendah. Universal selector memiliki prioritas paling rendah. Jika dua selector memiliki tingkat kekhususan yang sama, maka selector yang ditulis paling akhir dalam urutan pembacaan akan dipakai. 
+
+2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design memastikan tampilan dan fungsi dapat menyesuaikan dengan berbagai ukuran layar dan perangkat, pengalaman pengguna lebih baik, dan navigasi lebih mudah. Contoh aplikasi yang sudah menerapkan responsive design adalah website emas UI karena sudah dapat menyesuaikan dengan berbagai ukuran layar. Sedangkan, contoh aplikasi  web yang belum menerapkan responsive design adalah pacil web service karena tampilan belum dapat menyesuaikan dengan berbagai ukuran.
+
+3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin adalah ruang transparan di luar elemen yang berfungsi untuk menciptakan jarak antar elemen di halaman. Padding adalah ruang transparan di dalam elemen yang memberi jarak antara konten dengan garis tepinya. Border adalah garis visual yang membungkus konten dan padding. Dalam CSS, ketiga properti ini dapat diimplementasikan menggunakan properti shorthand misal padding: 20px atau properti longhand misal margin-top: 15px.
+
+4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+CSS Flexbox dan Grid adalah dua model tata letak modern. Flexbox mengatur item dalam satu dimensi. Grid dirancang untuk tata letak dua dimensi. Flexbox cocok untuk komponen seperti menu navigasi dan perataan konten di dalamnya. Grid untuk membangun kerangka halaman web yang terstruktur seperti header, sidebar, dan konten utama. 
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
+- Implementasikan fungsi untuk menghapus dan mengedit product.
+Untuk mengedit product, Saya membuat fungsi edit_product , membuat file edit_product.html di folder main, kemudian saya mengimpor fungsi tersebut di urls.py,  menambahkan path edit_product ke urlpatterns, lalu terakhir saya memodifikasi main.html agar button edit bisa muncul. Untuk menghapus product, saya membuat fungsi delete_product terlebih dahulu, lalu mengimpor dan menambahkan path delete_product di views.py, terakhir saya memperbaharui kode di main.html agar button delete bisa muncul.
+- Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+Saya memperbaharui file login.html, register.html, create_product.html, edit_product.html, dan product_detail.html agar tampilannya jadi menarik.
+-  Jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
+Pertama-tama saya memilih sebuah gambar dan mengganti namanya menjadi no-news.png, lalu saya menempatkan gambar itu di folder image yang ada di dalam folder static. Lalu, saya memodifikasi file main.html agar tulisan dan gambar saat tidak ada product bisa terlihat.
+-  Jika sudah ada product yang tersimpan, halaman daftar product akan menampilkan detail setiap product dengan menggunakan card!
+Saya mengimplementasikan hal tersebut melalui file card_product.html
+- Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
+Saya membuka file main.html adan menambahkan kode tentang dua button tersebut di loop product_list.
+- Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+Saya membuat file baru bernama navbar.html di folder templates. Saya mengisi file tersebut dengan kode navbar, kemudian menuliskan include navbar.html di main.html.

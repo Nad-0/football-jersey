@@ -1,54 +1,59 @@
- {% extends 'base.html' %}
- {% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
-<h1>Football Jersey Shop</h1>
+{% block meta %}
+<title>Football Jersey Shop</title>
+{% endblock meta %}
 
-<h5>NPM: </h5>
-<p>{{ npm }}</p>
+{% block content %}
+{% include 'navbar.html' %}
+<div class="bg-[#b3e5fc] w-full pt-16 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-black">
 
-<h5>Name:</h5>
-<p>{{ name }}</p>
+    <!-- Header Section -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-black mb-2">Football Jersey Collection</h1>
+      <p class="text-gray-700">Find and shop your favorite football jerseys</p>
+    </div>
 
-<h5>Class:</h5>
-<p>{{ kelas }}</p>
+    <!-- Filter Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 bg-white rounded-lg border border-gray-200 p-4">
+      <div class="flex space-x-3 mb-4 sm:mb-0">
+        <a href="?" 
+           class="{% if request.GET.filter == 'all' or not request.GET.filter  %} bg-blue-800 text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium transition-colors hover:bg-blue-900 hover:text-white">
+          All Jerseys
+        </a>
+        <a href="?filter=my" 
+           class="{% if request.GET.filter == 'my' %} bg-blue-800 text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium transition-colors hover:bg-blue-900 hover:text-white">
+          My Jerseys
+        </a>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="text-sm text-gray-600">
+          Last login: {{ last_login }}
+        </div>
+      {% endif %}
+    </div>
 
-<a href="{% url 'main:create_product' %}">
-  <button>+ Add Product</button>
-</a>
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<hr>
-
-<a href="?filter=all">
-    <button type="button">All Articles</button>
-</a>
-<a href="?filter=my">
-    <button type="button">My Articles</button>
-</a> 
-
-{% if not product_list %}
-<p>Belum ada data produk pada Football Jersey Shop.</p>
-{% else %}
-
-{% for product in product_list %}
-<div>
-  <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
-
-  <p><b>Harga:</b> Rp {{ product.price }}</p>
-
-  {% if product.image %}
-  <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150" height="200">
-  <br />
-  {% endif %}
-
-  <p>{{ product.description|truncatewords:25 }}...</p>
-
-  <p><a href="{% url 'main:show_product' product.id %}"><button>Detail</button></a></p>
+    <!-- Jerseys Grid -->
+    {% if not product_list %}
+      <div class="bg-white rounded-lg border border-gray-200 p-12 text-center">
+        <div class="w-32 h-32 mx-auto mb-4">
+          <img src="{% static 'image/no-product.png' %}" alt="No jersey available" class="w-full h-full object-contain">
+        </div>
+        <h3 class="text-lg font-medium text-black mb-2">No jerseys found</h3>
+        <p class="text-gray-600 mb-6">Be the first to add a football jersey to the shop.</p>
+        <a href="{% url 'main:create_product' %}" class="inline-flex items-center px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition-colors">
+          Add Jersey
+        </a>
+      </div>
+    {% else %}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for product in product_list %}
+          {% include 'card_product.html' with product=product %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
 </div>
-
-<hr>
-  {% endfor %}
-{% endif %}
 {% endblock content %}

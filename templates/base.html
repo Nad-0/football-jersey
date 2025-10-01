@@ -1,13 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    {% block meta %} 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %} {% endblock meta %}
-</head>
-
-<body>
-    {% block content %} {% endblock content %}
-</body>
+    {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+  </head>
+  <body class="bg-[#b3e5fc] text-black min-h-screen">
+    {% include 'navbar.html' %}
+    <main class="container mx-auto p-4 bg-transparent">
+      {% block content %}{% endblock content %}
+    </main>
+  </body>
 </html>

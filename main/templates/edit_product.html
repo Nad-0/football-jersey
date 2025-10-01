@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen w-full bg-[#b3e5fc] flex justify-center items-center py-10">
+  <div class="bg-white w-full max-w-2xl rounded-lg shadow-md p-8">
+    <h1 class="text-2xl font-bold text-black mb-6">Edit News</h1>
+
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+      
+      <div class="space-y-4">
+        {{ form.as_p }}
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit" 
+          class="bg-blue-900 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-800 transition-colors">
+          Edit News
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
