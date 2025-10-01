@@ -1,0 +1,16 @@
+.form-style form input:focus, form textarea:focus, form select:focus {
+    outline: none;
+    border-color: #1e3a8a; 
+    box-shadow: 0 0 0 3px #1e3a8a;
+}
+
+.form-style input[type="checkbox"]:checked {
+    background-color: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+.form-style input[type="checkbox"]:focus {
+    outline: none;
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); 
+}

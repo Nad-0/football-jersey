@@ -113,7 +113,3 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
-# Django static & media
-/static/
-/staticfiles/
-/media/
