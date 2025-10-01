@@ -115,8 +115,8 @@ def logout_user(request):
     return response
 
 def edit_product(request, id):
-    news = get_object_or_404(Product, pk=id)
-    form = ProductForm(request.POST or None, instance=news)
+    product = get_object_or_404(Product, pk=id)
+    form = ProductForm(request.POST or None, instance=product)
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect('main:show_main')
