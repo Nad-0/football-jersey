@@ -169,7 +169,7 @@ def delete_product(request, id):
 
 @csrf_exempt
 @login_required
-def add_product_entry_ajax(request):
+def create_product_ajax(request):
     if request.method == 'POST':
         name = strip_tags(request.POST.get('name'))
         price = request.POST.get('price')

@@ -68,7 +68,7 @@
     function showModal() {
         const modal = document.getElementById('crudModal');
         const modalContent = document.getElementById('crudModalContent');
-        modal.classList.remove('hidden'); 
+        modal.classList.remove('hidden');
         setTimeout(() => {
             modalContent.classList.remove('opacity-0', 'scale-95');
             modalContent.classList.add('opacity-100', 'scale-100');
@@ -86,7 +86,8 @@
     }
 
     async function addProductEntry() {
-        await fetch("{% url 'main:add_product_entry_ajax' %}", {
+        // PERBAIKAN DI BARIS INI
+        await fetch("{% url 'main:create_product_ajax' %}", {
             method: "POST",
             body: new FormData(document.querySelector('#productForm')),
         });
@@ -103,8 +104,11 @@
         addProductEntry();
     });
 
-    document.getElementById("newsForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        addNewsEntry();
-    })
+    const newsForm = document.getElementById("newsForm");
+    if (newsForm) {
+        newsForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            addNewsEntry();
+        });
+    }
 </script>

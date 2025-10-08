@@ -6,96 +6,132 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="w-full min-h-screen" style="background-color: #bcdfff;"> 
-  <div class="max-w-3xl mx-auto py-10">
-    <h1 class="text-3xl font-bold text-center mb-6 text-black">Tambah Produk Baru</h1>
+<div class="w-full min-h-screen" style="background-color: #bcdfff;">
+    <div class="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
 
-    <!-- FORM CREATE PRODUCT -->
-    <form id="createProductForm" class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-8">
-      {% csrf_token %}
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Nama Produk:</label>
-        <input type="text" id="productName" name="name" required
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Harga (Rp):</label>
-        <input type="number" id="productPrice" name="price" required
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
-        <textarea id="productDescription" name="description" required
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-      </div>
-
-      <button type="submit"
-        class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline w-full">
-        Tambah Produk
-      </button>
-    </form>
-
-    <!-- LIST PRODUK -->
-    <h2 class="text-2xl font-bold text-black mb-4">Daftar Produk</h2>
-    <div id="productList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {% for product in products %}
-      <div class="bg-white p-4 rounded-2xl shadow-lg">
-        <h3 class="text-xl font-bold text-black">{{ product.name }}</h3>
-        <p class="text-gray-700 mb-2">Rp {{ product.price|floatformat:0 }}</p>
-        <p class="text-gray-600 text-sm mb-2">{{ product.description }}</p>
-        <p class="text-gray-500 text-xs mb-3">👁️ {{ product.views }} views</p>
-        <div class="flex gap-2">
-          <button class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-3 rounded-2xl text-sm">Edit</button>
-          <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-2xl text-sm">Delete</button>
+        <div class="mb-6">
+            <a href="{% url 'main:show_main' %}" class="inline-flex items-center text-blue-800 hover:text-blue-600 transition-colors">
+                <svg class="w-4 h-4 mr-1 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                Back to Home
+            </a>
         </div>
-      </div>
-      {% empty %}
-      <p class="text-gray-600">Belum ada produk.</p>
-      {% endfor %}
+
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-blue-800 mb-2">Add New Product</h1>
+            <p class="text-gray-600">Share your new football jersey product with the community</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8">
+            <h2 class="text-xl font-semibold text-blue-800 mb-6">Product Information</h2>
+            <form id="createProductForm" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="productName" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                    <input type="text" id="productName" name="name" required
+                        class="block w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="Enter product name">
+                </div>
+
+                <div>
+                    <label for="productPrice" class="block text-sm font-medium text-gray-700 mb-1">Price (Rp)</label>
+                    <input type="number" id="productPrice" name="price" required
+                        class="block w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="Enter price">
+                </div>
+
+                <div>
+                    <label for="productDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="productDescription" name="description" required rows="4"
+                        class="block w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"
+                        placeholder="Explain the product details"></textarea>
+                </div>
+
+                <div>
+                    <label for="productCategory" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="productCategory" name="category"
+                        class="block w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Choose a Category</option>
+                        <option value="international">International</option>
+                        <option value="national">National</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="productThumbnail" class="block text-sm font-medium text-gray-700 mb-1">Image URL (Optional)</label>
+                    <input type="url" id="productThumbnail" name="thumbnail"
+                        class="block w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="https://example.com/jersey.jpg">
+                    <p class="mt-1 text-xs text-gray-500">Add the product's image URL if available.</p>
+                </div>
+
+                <div class="flex items-center">
+                    <input id="isFeatured" name="is_featured" type="checkbox"
+                        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="isFeatured" class="ml-2 block text-sm text-gray-900">Is featured</label>
+                </div>
+            </form>
+            
+            <div class="mt-8 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-4">
+                <button type="button" onclick="history.back()"
+                    class="w-full sm:w-auto mt-4 sm:mt-0 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Cancel
+                </button>
+                <button type="submit" form="createProductForm"
+                    class="w-full sm:w-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Publish Product
+                </button>
+            </div>
+ 
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- AJAX SCRIPT -->
 <script>
 document.getElementById("createProductForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const formData = new FormData(this);
 
-  fetch("{% url 'create_product_ajax' %}", {
+  // Make sure the URL is correct with the 'main:' namespace
+  fetch("{% url 'main:create_product_ajax' %}", {
     method: "POST",
-    headers: {
-      "X-CSRFToken": "{{ csrf_token }}",
-    },
     body: formData,
   })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
+        // This part is for dynamically adding the product to a list on the same page.
+        // If you redirect, this might not be necessary.
         const newProduct = data.product;
+        // Assuming you have a div with id="productList" on this page to show the new item.
         const productList = document.getElementById("productList");
-        const productCard = document.createElement("div");
-        productCard.classList.add("bg-white", "p-4", "rounded-2xl", "shadow-lg");
-        productCard.innerHTML = `
-          <h3 class="text-xl font-bold text-black">${newProduct.name}</h3>
-          <p class="text-gray-700 mb-2">Rp ${newProduct.price.toLocaleString("id-ID")}</p>
-          <p class="text-gray-600 text-sm mb-2">${newProduct.description}</p>
-          <p class="text-gray-500 text-xs mb-3">👁️ ${newProduct.views} views</p>
-          <div class="flex gap-2">
-            <button class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-3 rounded-2xl text-sm">Edit</button>
-            <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-2xl text-sm">Delete</button>
-          </div>
-        `;
-
-        productList.prepend(productCard); 
-
+        if (productList) {
+            const productCard = document.createElement("div");
+            productCard.classList.add("bg-white", "p-4", "rounded-2xl", "shadow-lg");
+            productCard.innerHTML = `
+            <h3 class="text-xl font-bold text-black">${newProduct.name}</h3>
+            <p class="text-gray-700 mb-2">Rp ${newProduct.price.toLocaleString("id-ID")}</p>
+            <p class="text-gray-600 text-sm mb-2">${newProduct.description}</p>
+            <p class="text-gray-500 text-xs mb-3">👁️ ${newProduct.views || 0} views</p>
+            <div class="flex gap-2">
+                <button class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-3 rounded-2xl text-sm">Edit</button>
+                <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-2xl text-sm">Delete</button>
+            </div>
+            `;
+            productList.prepend(productCard);
+        }
+        
         document.getElementById("createProductForm").reset();
+        // Optionally, redirect to the main page after success
+        // window.location.href = "{% url 'main:show_main' %}";
       } else {
         alert(data.error || "Error occurred!");
       }
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('An error occurred while adding the product. Please try again.');
     });
 });
 </script>
