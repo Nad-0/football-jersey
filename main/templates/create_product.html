@@ -2,56 +2,101 @@
 {% load static %}
 
 {% block meta %}
-<title>Edit Product</title>
+<title>Create Product</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="w-full min-h-screen bg-[#b3e5fc] pt-20">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    
-    <!-- Back Navigation -->
-    <div class="mb-6">
-      <a href="{% url 'main:show_main' %}" class="text-black hover:text-blue-700 font-medium transition-colors">
-        ← Back to Products
-      </a>
-    </div>
-    
-    <!-- Form -->
-    <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style shadow">
-      <div class="mb-8">
-        <h1 class="text-2xl font-bold text-black mb-2">Edit Product</h1>
-        <p class="text-gray-700">Update your product details here</p>
+<div class="w-full min-h-screen" style="background-color: #bcdfff;"> 
+  <div class="max-w-3xl mx-auto py-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-black">Tambah Produk Baru</h1>
+
+    <!-- FORM CREATE PRODUCT -->
+    <form id="createProductForm" class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-8">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Nama Produk:</label>
+        <input type="text" id="productName" name="name" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
       </div>
-      
-      <form method="POST" class="space-y-6">
-        {% csrf_token %}
-        {% for field in form %}
-          <div>
-            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-black mb-2">
-              {{ field.label }}
-            </label>
-            <div class="w-full">
-              {{ field }}
-            </div>
-            {% if field.help_text %}
-              <p class="mt-1 text-sm text-gray-600">{{ field.help_text }}</p>
-            {% endif %}
-            {% for error in field.errors %}
-              <p class="mt-1 text-sm text-red-600">{{ error }}</p>
-            {% endfor %}
-          </div>
-        {% endfor %}
-        
-        <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
-          <a href="{% url 'main:show_main' %}" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-100 transition-colors text-center">
-            Cancel
-          </a>
-          <button type="submit" class="order-1 sm:order-2 flex-1 bg-blue-700 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-800 transition-colors">
-            Update Product
-          </button>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Harga (Rp):</label>
+        <input type="number" id="productPrice" name="price" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
+        <textarea id="productDescription" name="description" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+      </div>
+
+      <button type="submit"
+        class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline w-full">
+        Tambah Produk
+      </button>
+    </form>
+
+    <!-- LIST PRODUK -->
+    <h2 class="text-2xl font-bold text-black mb-4">Daftar Produk</h2>
+    <div id="productList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% for product in products %}
+      <div class="bg-white p-4 rounded-2xl shadow-lg">
+        <h3 class="text-xl font-bold text-black">{{ product.name }}</h3>
+        <p class="text-gray-700 mb-2">Rp {{ product.price|floatformat:0 }}</p>
+        <p class="text-gray-600 text-sm mb-2">{{ product.description }}</p>
+        <p class="text-gray-500 text-xs mb-3">👁️ {{ product.views }} views</p>
+        <div class="flex gap-2">
+          <button class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-3 rounded-2xl text-sm">Edit</button>
+          <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-2xl text-sm">Delete</button>
         </div>
-      </form>
+      </div>
+      {% empty %}
+      <p class="text-gray-600">Belum ada produk.</p>
+      {% endfor %}
     </div>
   </div>
 </div>
-{% endblock %}
+
+<!-- AJAX SCRIPT -->
+<script>
+document.getElementById("createProductForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  fetch("{% url 'create_product_ajax' %}", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}",
+    },
+    body: formData,
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const newProduct = data.product;
+        const productList = document.getElementById("productList");
+        const productCard = document.createElement("div");
+        productCard.classList.add("bg-white", "p-4", "rounded-2xl", "shadow-lg");
+        productCard.innerHTML = `
+          <h3 class="text-xl font-bold text-black">${newProduct.name}</h3>
+          <p class="text-gray-700 mb-2">Rp ${newProduct.price.toLocaleString("id-ID")}</p>
+          <p class="text-gray-600 text-sm mb-2">${newProduct.description}</p>
+          <p class="text-gray-500 text-xs mb-3">👁️ ${newProduct.views} views</p>
+          <div class="flex gap-2">
+            <button class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-3 rounded-2xl text-sm">Edit</button>
+            <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-2xl text-sm">Delete</button>
+          </div>
+        `;
+
+        productList.prepend(productCard); 
+
+        document.getElementById("createProductForm").reset();
+      } else {
+        alert(data.error || "Error occurred!");
+      }
+    });
+});
+</script>
+{% endblock content %}

@@ -1,25 +1,117 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<div class="min-h-screen w-full bg-[#b3e5fc] flex justify-center items-center py-10">
-  <div class="bg-white w-full max-w-2xl rounded-lg shadow-md p-8">
-    <h1 class="text-2xl font-bold text-black mb-6">Edit News</h1>
+{% block meta %}
+<title>Edit Product</title>
+{% endblock meta %}
 
-    <form method="POST" class="space-y-6">
+{% block content %}
+{% include 'navbar.html' %}
+<div class="bg-[#b3e5fc] min-h-screen flex items-center justify-center py-10 px-4">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Product</h1>
+
+    <form id="editForm" method="POST">
       {% csrf_token %}
       
-      <div class="space-y-4">
-        {{ form.as_p }}
+      <div class="mb-5">
+        <label for="id_name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+        <input type="text" name="name" id="id_name" value="{{ form.name.value }}"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
       </div>
 
-      <div class="flex justify-end">
-        <button type="submit" 
-          class="bg-blue-900 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-800 transition-colors">
-          Edit News
-        </button>
+      <div class="mb-5">
+        <label for="id_price" class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+        <input type="number" name="price" id="id_price" value="{{ form.price.value }}"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <div class="mb-5">
+        <label for="id_description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+        <textarea name="description" id="id_description" rows="4"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">{{ form.description.value }}</textarea>
+      </div>
+
+      <div class="mb-5">
+        <label for="id_thumbnail" class="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
+        <input type="url" name="thumbnail" id="id_thumbnail" value="{{ form.thumbnail.value }}"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <div class="mb-5">
+        <label for="id_category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+        <select name="category" id="id_category"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+          {% for value, label in form.category.field.choices %}
+            <option value="{{ value }}" {% if value == form.category.value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-6 flex items-center">
+        <input type="checkbox" name="is_featured" id="id_is_featured" {% if form.is_featured.value %}checked{% endif %}
+               class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="id_is_featured" class="ml-2 text-sm text-gray-700">Is Featured</label>
+      </div>
+
+      <div class="flex justify-end space-x-3">
+        <a href="{% url 'main:show_main' %}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition">Cancel</a>
+        <button type="submit" class="px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition">Update Product</button>
       </div>
     </form>
   </div>
 </div>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+document.getElementById("editForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  fetch("{% url 'main:ajax_edit_product' product.id %}", {
+    method: "POST",
+    body: formData,
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRFToken": csrftoken 
+    }
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      alert("✅ Product updated successfully!");
+      window.location.href = "{% url 'main:show_main' %}";
+    } else {
+      let errorMessage = result.message || "Failed to update.";
+      if (result.errors) {
+        errorMessage += "\n" + JSON.stringify(result.errors);
+      }
+      alert("❌ " + errorMessage);
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Something went wrong! Check the console.");
+  });
+});
+</script>
 {% endblock %}
