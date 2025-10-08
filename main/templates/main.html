@@ -41,6 +41,11 @@
            class="bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md font-medium transition-colors hover:bg-[#0b3d91] hover:text-white">
           My Jerseys
         </a>
+        <button id="refresh-btn"
+        class="flex items-center bg-[#0b3d91] text-white px-4 py-2 rounded-md font-medium hover:bg-[#082a66] transition-colors">
+        Refresh
+      </button>
+
       </div>
       {% if user.is_authenticated %}
         <div class="text-sm text-gray-600">
@@ -221,10 +226,6 @@ async function fetchProductsFromServer() {
     displayPageSection({ showError: true });
   }
 }
-
-// --- AJAX delete (calls backend delete endpoint) ---
-// We assume there's an endpoint named 'main:ajax_delete_product' that accepts DELETE on /.../<id>.
-// We'll build the URL similarly to other url() usages but replace placeholder with id.
 function getAjaxDeleteUrl(id) {
   // pattern from Django url tag with placeholder, then replace
   return `{% url 'main:ajax_delete_product' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', id);
@@ -261,14 +262,21 @@ async function deleteProductAjax(id, btnElement) {
 }
 
 // --- EVENT LISTENERS ---
+// --- EVENT LISTENERS ---
 showAllProductsButton.addEventListener('click', e => { e.preventDefault(); activeFilter = 'all'; filterAndDisplayProducts(); });
 showMyProductsButton.addEventListener('click', e => { e.preventDefault(); activeFilter = 'my'; filterAndDisplayProducts(); });
+const refreshButton = document.getElementById('refresh-btn');
+refreshButton.addEventListener('click', e => {
+  e.preventDefault();
+  fetchProductsFromServer();
+});
 
 // initialize
 fetchProductsFromServer();
 
 // allow external code to trigger reload after creating a product
 document.addEventListener('productAdded', fetchProductsFromServer);
+
 </script>
 
 {% endblock content %}
